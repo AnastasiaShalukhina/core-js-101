@@ -392,8 +392,9 @@ function sortDigitNamesByNumericOrder(arr) {
  *   [ -1, 1, -1, 1 ]      => 0
  *   [ 1, 10, 100, 1000 ]  => 1111
  */
-function getItemsSum(/* arr */) {
-  throw new Error('Not implemented');
+function getItemsSum(arr) {
+  const sumOfNumbers = arr.reduce((sum, current) => sum + current, 0);
+  return sumOfNumbers;
 }
 
 /**
@@ -408,8 +409,15 @@ function getItemsSum(/* arr */) {
  *  [ -1, 'false', null, 0 ] => 2
  *  [ null, undefined, NaN, false, 0, '' ]  => 6
  */
-function getFalsyValuesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getFalsyValuesCount(arr) {
+  if (arr.length === 0) return 0;
+  const result = arr.reduce((sum, item) => {
+    if (!item) {
+      return sum + 1;
+    }
+    return sum;
+  }, 0);
+  return result;
 }
 
 /**
@@ -426,8 +434,14 @@ function getFalsyValuesCount(/* arr */) {
  *    [ null, undefined, null ], null => 2
  *    [ true, 0, 1, 'true' ], true => 1
  */
-function findAllOccurrences(/* arr, item */) {
-  throw new Error('Not implemented');
+function findAllOccurrences(arr, item) {
+  const occurenceCount = arr.reduce((count, element) => {
+    if (element === item) {
+      return count + 1;
+    }
+    return count;
+  }, 0);
+  return occurenceCount;
 }
 
 /**
@@ -441,8 +455,9 @@ function findAllOccurrences(/* arr, item */) {
  *    [1, 2, 3, 4, 5]                   => '1,2,3,4,5'
  *    ['rock', 'paper', 'scissors']     => 'rock,paper,scissors'
  */
-function toStringList(/* arr */) {
-  throw new Error('Not implemented');
+function toStringList(arr) {
+  const concatenatedString = arr.join(',');
+  return concatenatedString;
 }
 
 /**
@@ -471,8 +486,23 @@ function toStringList(/* arr */) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  const sortedCountry = arr.sort((a, b) => {
+    if (a.country === b.country) {
+      if (a.city < b.city) {
+        return -1;
+      }
+      if (a.city > b.city) {
+        return 1;
+      }
+      return 0;
+    }
+    if (a.country > b.country) {
+      return 1;
+    }
+    return -1;
+  });
+  return sortedCountry;
 }
 
 /**
@@ -493,8 +523,9 @@ function sortCitiesArray(/* arr */) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  const r = [...Array(n)].map((i, ind, arr) => arr.map((subi, subind) => (ind === subind ? 1 : 0)));
+  return r;
 }
 
 /**
@@ -510,8 +541,13 @@ function getIdentityMatrix(/* n */) {
  *     0, 100 => [ 0, 1, 2, ..., 100 ]
  *     3, 3   => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
-  throw new Error('Not implemented');
+function getIntervalArray(start, end) {
+  const result = [...Array(end - start + 1)];
+  result.map((item, index) => {
+    result.fill(start + index, index);
+    return item;
+  });
+  return result;
 }
 
 /**
@@ -525,8 +561,10 @@ function getIntervalArray(/* start, end */) {
  *   [ 'a', 'a', 'a', 'a' ]  => [ 'a' ]
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
-function distinct(/* arr */) {
-  throw new Error('Not implemented');
+function distinct(arr) {
+  const unique = new Set(arr);
+  const data = Array.from(unique);
+  return data;
 }
 
 /**
@@ -576,8 +614,10 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], (x) => x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  const modified = arr.map(childrenSelector);
+  const resulted = modified.flat();
+  return resulted;
 }
 
 /**
@@ -614,8 +654,19 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  if (arr.length % 2 === 0) {
+    const index = arr.length / 2;
+    const head = arr.slice(0, index);
+    const tail = arr.slice(index);
+    const result = tail.concat(head);
+    return result;
+  }
+  const index = Math.floor(arr.length / 2);
+  const head = arr.slice(0, index);
+  const tail = arr.slice(index + 1);
+  const result = tail.concat(arr[index], head);
+  return result;
 }
 
 module.exports = {
