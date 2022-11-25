@@ -231,8 +231,9 @@ function toCsvText(arr) {
  *   [ 0, 1, 2, 3, 4, 5 ] => [ 0, 1, 4, 9, 16, 25 ]
  *   [ 10, 100, -1 ]      => [ 100, 10000, 1 ]
  */
-function toArrayOfSquares(/* arr */) {
-  throw new Error('Not implemented');
+function toArrayOfSquares(arr) {
+  const squared = arr.map((item) => item * item);
+  return squared;
 }
 
 /**
@@ -249,8 +250,13 @@ function toArrayOfSquares(/* arr */) {
  *   [ 0, 0, 0, 0, 0]         => [ 0, 0, 0, 0, 0]
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
-function getMovingSum(/* arr */) {
-  throw new Error('Not implemented');
+function getMovingSum(arr) {
+  const transformed = [];
+  arr.reduce((last, curr, index) => {
+    transformed[index] = last + curr;
+    return transformed[index];
+  }, 0);
+  return transformed;
 }
 
 /**
@@ -264,8 +270,9 @@ function getMovingSum(/* arr */) {
  * [ 'a', 'b', 'c' , null ]  => [ "b", null ]
  * [ "a" ] => []
  */
-function getSecondItems(/* arr */) {
-  throw new Error('Not implemented');
+function getSecondItems(arr) {
+  const evenEl = arr.filter((item, index) => index % 2 !== 0);
+  return evenEl;
 }
 
 /**
@@ -282,8 +289,12 @@ function getSecondItems(/* arr */) {
  *  [ 'a', 'b', 'c', null ] => [ 'a', 'b','b', 'c','c','c',  null,null,null,null ]
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
-function propagateItemsByPositionIndex(/* arr */) {
-  throw new Error('Not implemented');
+function propagateItemsByPositionIndex(arr) {
+  const repeated = arr.reduce(
+    (array, item, i) => array.concat(Array.from({ length: i + 1 }, () => item)),
+    [],
+  );
+  return repeated;
 }
 
 /**
@@ -299,8 +310,24 @@ function propagateItemsByPositionIndex(/* arr */) {
  *   [ 1,2,3,4,5,6,7,8,9,10 ] => [ 10, 9, 8 ]
  *   [ 10, 10, 10, 10 ] => [ 10, 10, 10 ]
  */
-function get3TopItems(/* arr */) {
-  throw new Error('Not implemented');
+function get3TopItems(arr) {
+  const arrWithWinners = [];
+  if (arr.length !== 0) {
+    const maxValue = Math.max(...arr);
+    arr.splice(arr.indexOf(maxValue), 1);
+    arrWithWinners.push(maxValue);
+  }
+  if (arr.length !== 0) {
+    const maxValue = Math.max(...arr);
+    arr.splice(arr.indexOf(maxValue), 1);
+    arrWithWinners.push(maxValue);
+  }
+  if (arr.length !== 0) {
+    const maxValue = Math.max(...arr);
+    arr.splice(arr.indexOf(maxValue), 1);
+    arrWithWinners.push(maxValue);
+  }
+  return arrWithWinners;
 }
 
 /**
@@ -316,8 +343,11 @@ function get3TopItems(/* arr */) {
  *   [ null, 1, 'elephant' ] => 1
  *   [ 1, '2' ] => 1
  */
-function getPositivesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getPositivesCount(arr) {
+  const arrWithPositive = arr.filter(
+    (item) => typeof item === 'number' && item > 0,
+  );
+  return arrWithPositive.length;
 }
 
 /**
@@ -333,8 +363,21 @@ function getPositivesCount(/* arr */) {
  *   [ 'nine','eight','nine','eight'] => [ 'eight','eight','nine','nine']
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const obj = {
+    one: 1,
+    two: 2,
+    three: 3,
+    four: 4,
+    five: 5,
+    six: 6,
+    seven: 7,
+    eight: 8,
+    nine: 9,
+    zero: 0,
+  };
+  arr.sort((a, b) => obj[a] - obj[b]);
+  return arr;
 }
 
 /**
