@@ -6,7 +6,6 @@
  *                                                                                           *
  ******************************************************************************************* */
 
-
 /**
  * Parses a rfc2822 string date representation into date value
  * For rfc2822 date specification refer to : http://tools.ietf.org/html/rfc2822#page-14
@@ -38,7 +37,6 @@ function parseDataFromIso8601(/* value */) {
   throw new Error('Not implemented');
 }
 
-
 /**
  * Returns true if specified date is leap year and false otherwise
  * Please find algorithm here: https://en.wikipedia.org/wiki/Leap_year#Algorithm
@@ -57,7 +55,6 @@ function isLeapYear(/* date */) {
   throw new Error('Not implemented');
 }
 
-
 /**
  * Returns the string representation of the timespan between two dates.
  * The format of output string is "HH:mm:ss.sss"
@@ -73,10 +70,30 @@ function isLeapYear(/* date */) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
+function timeSpanToString(startDate, endDate) {
+  const diff = +endDate - +startDate;
+  let hours = Math.floor(diff / 1000 / 60 / 60);
+  const restMin = diff - hours * 1000 * 60 * 60;
+  let min = Math.floor(restMin / 1000 / 60);
+  const restSec = restMin - min * 1000 * 60;
+  let sec = Math.floor(restSec / 1000);
+  let millisec = restSec - sec * 1000;
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  if (min < 10) {
+    min = `0${min}`;
+  }
+  if (sec < 10) {
+    sec = `0${sec}`;
+  }
+  if (millisec >= 10 && millisec < 100) {
+    millisec = `0${millisec}`;
+  } else if (millisec >= 0 && millisec < 10) {
+    millisec = `00${millisec}`;
+  }
+  return `${hours}:${min}:${sec}.${millisec}`;
 }
-
 
 /**
  * Returns the angle (in radians) between the hands of an analog clock
@@ -94,10 +111,24 @@ function timeSpanToString(/* startDate, endDate */) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(/* date */) {
-  throw new Error('Not implemented');
+function angleBetweenClockHands(date) {
+  let hours = date.getUTCHours();
+  if (hours >= 12) {
+    hours -= 12;
+  }
+  const minutes = date.getMinutes();
+  const minDegree = 6 * minutes;
+  const hourDegree = (hours * 5 + (2.5 / 30) * minutes) * 6;
+  let angleDeg = Math.abs(minDegree - hourDegree);
+  if (angleDeg === 180) {
+    return Math.PI;
+  }
+  if (angleDeg > 180) {
+    angleDeg = 360 - angleDeg;
+  }
+  const angleRad = (angleDeg * Math.PI) / 180;
+  return angleRad;
 }
-
 
 module.exports = {
   parseDataFromRfc2822,
